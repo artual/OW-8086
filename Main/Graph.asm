@@ -11,34 +11,25 @@ proc mainAnimation
 	
 	
 	
-	xor bx, bx
-mainGraphLoop:
-	
-	
-	
-	inc bx
-	inc bx
-	cmp bx, 4h
-	JE mainGraphLoop
-	
 	
 heroAnimation:
-	mov al, [actionCodes + 0h]
+	mov al, [actionCodePlayer]
 	xor ah, ah
 	push ax ; actionCode
 	push 28h ; char(color)
 	push mxPast
 	push myPast
-	call charMvmAni
+	call charAnimation
 	
 evilAnimation:
-	mov al, [actionCodes + 2h]
+	mov al, [actionCodeEnemy]
 	xor ah, ah
 	push ax
 	push 40h
-	push [xCordsPast + 2h]
-	push [yCordsPast + 2h]
-	call charMvmAni
+	push [xEnemyPast]
+	push [yEnemyPast]
+	call charAnimation
+	
 	
 	
 	pop ax

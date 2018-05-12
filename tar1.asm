@@ -8,60 +8,51 @@ par3 equ [bp + 6]
 par2 equ [bp + 4]
 par1 equ [bp + 2]
 
-mx equ [xCords]
-mxPast equ [xCordsPast]
-my equ [yCords]
-myPast equ [yCordsPast]
+mx equ [xPlayer]
+mxPast equ [xPlayerPast]
+my equ [yPlayer]
+myPast equ [yPlayerPast]
 
 clock equ [es:6ch]
 	
 	include 'Main\Input.asm'
-	include 'Inp\plyInp.asm'
-	include 'Inp\badInp.asm'
+	include 'basic\charInp.asm'
 	
 	include 'Main\Calcul.asm'
-	include 'Cal\charCal.asm'
-	include 'Cal\PnchAlgo.asm'
+	include 'basic\charCal.asm'
 	
 	include 'Main\Graph.asm'
-	include 'Ani\charAni.asm'
-	include 'Ani\rectangl.asm'
+	include 'basic\charAni.asm'
 
 DATASEG
 ; --------------------------
 ; Your variables here
 ; --------------------------
-
-keyCodes db (0)
-		 db (0)
+keyCodePlayer db (0)
 	; bit 8 = nothing
 	
-	; bit 1 = W
-	; bit 2 = A
-	; bit 3 = S
-	; bit 4 = D
-	; bit 5 = J
-	
-actionCodes db (0)
-			db (0)
+	; bit 1 = w
+	; bit 2 = a
+	; bit 3 = s
+	; bit 4 = d
+actionCodePlayer db (0)
 	; bit 8 = nothing
 	
 	; bit 1 = up
 	; bit 2 = left
 	; bit 3 = down
 	; bit 4 = right
-	; bit 5 = punch
-	
-xCords dw (150)
-	   dw (310)
-xCordsPast dw 2 dup (0)
-yCords dw (100)
-	   dw (190)
-yCordsPast dw 2 dup (0)
-colorObject db (28h)
-			db (40h)
+xPlayer dw (150)
+xPlayerPast dw (0)
+yPlayer dw (100)
+yPlayerPast dw (0)
 
-
+keyCodeEnemy db (0)
+actionCodeEnemy db (0)
+xEnemy dw (310)
+xEnemyPast dw (0)
+yEnemy dw (190)
+yEnemyPast dw (0)
 
 tempClock dw (0)
 
@@ -87,8 +78,8 @@ start:
 	call spawn
 	
 	push 40h
-	push [xCords + 2]
-	push [yCords + 2]
+	push [xEnemy]
+	push [yEnemy]
 	call spawn
 	
 	mov ax, 0c00h

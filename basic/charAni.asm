@@ -2,6 +2,8 @@
 ;	
 ;	this file gets the action code and shows the action on screen.
 ;	
+;	NEED TO CHANGE:
+;	1. in charAnimation do that it changes x and y.
 ;	
 ;	
 ;	
@@ -18,6 +20,7 @@ par3 equ [bp + 6]
 par2 equ [bp + 4]
 par1 equ [bp + 2]
 
+	include 'basic\rectangl.asm'
 
 CODESEG
 
@@ -41,8 +44,8 @@ proc spawn
 endp spawn
 
 ; gets color, x, y
-; moves char up
-proc moveUp
+; moves char right
+proc moveRight
 	push bp
 	mov bp, sp
 	inc bp
@@ -50,26 +53,23 @@ proc moveUp
 	push ax
 	
 	push 0 ; color
-	push 10 ; columns
+	push 10 ; rows
 	push par2 ; x
-	mov ax, par1
-	add ax, 9
-	push ax ; y
-	call redLine
+	push par1 ; y
+	call redColumn
 	
 	push par3 ; color
-	push 10 ; columns
-	push par2 ; x
-	mov ax, par1
-	sub ax, 1
-	push ax ; y
-	call redLine
+	push 10 ; rows
+	mov ax, par2
+	add ax, 10
+	push ax ; x
+	push par1 ; y
+	call redColumn
 	
 	pop ax
 	pop bp
 	ret 6
-endp moveUp
-
+endp moveRight
 
 ; gets color, x, y
 ; moves char left
@@ -101,6 +101,35 @@ proc moveLeft
 	ret 6
 endp moveLeft
 
+; gets color, x, y
+; moves char up
+proc moveUp
+	push bp
+	mov bp, sp
+	inc bp
+	inc bp
+	push ax
+	
+	push 0 ; color
+	push 10 ; columns
+	push par2 ; x
+	mov ax, par1
+	add ax, 9
+	push ax ; y
+	call redLine
+	
+	push par3 ; color
+	push 10 ; columns
+	push par2 ; x
+	mov ax, par1
+	sub ax, 1
+	push ax ; y
+	call redLine
+	
+	pop ax
+	pop bp
+	ret 6
+endp moveUp
 
 ; gets color, x, y
 ; moves char down
@@ -131,98 +160,68 @@ proc moveDown
 endp moveDown
 
 
-; gets color, x, y
-; moves char right
-proc moveRight
-	push bp
-	mov bp, sp
-	inc bp
-	inc bp
-	push ax
-	
-	push 0 ; color
-	push 10 ; rows
-	push par2 ; x
-	push par1 ; y
-	call redColumn
-	
-	push par3 ; color
-	push 10 ; rows
-	mov ax, par2
-	add ax, 10
-	push ax ; x
-	push par1 ; y
-	call redColumn
-	
-	pop ax
-	pop bp
-	ret 6
-endp moveRight
-
-
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;; Main ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-; gets number of object
 ; gets actionCode, char(color), x, y
 ; displays the animation of player
-proc charMvmAni
+proc charAnimation
 	push bp
 	mov bp, sp
 	inc bp
 	inc bp
 	push ax
 	push bx
+	push cx
+	push dx
 	
-	
-	mov bx, par1
-	
-	mov al, [actionCodes + bx]
+	mov ax, par4
 	xor ah, ah
 	
+anPlay8h:
+	cmp al, 80h
+	JZ endPlayerAnimation
 	
-	mov al, [colorObject + bx]
-	xor ah, ah
-	push ax
-	push [xCordsPast + bx]
-	push [yCordsPast + bx]
+	push par3
+	push par2
+	push par1
 	
-anPly0001b:
+anPlay0001b:
 	cmp al, 0001b
-	JNZ anPly0010b
+	JNZ anPlay0010b
 	
 	call moveUp
-	jmp endCharMvmAni
+	jmp endPlayerAnimation
 	
-anPly0010b:
+anPlay0010b:
 	cmp al, 0010b
-	JNZ anPly0100b
+	JNZ anPlay0100b
 	
 	call moveLeft
-	jmp endCharMvmAni
+	jmp endPlayerAnimation
 	
-anPly0100b:
+anPlay0100b:
 	cmp al, 0100b
-	JNZ anPly1000b
+	JNZ anPlay1000b
 	
 	call moveDown
-	jmp endCharMvmAni
+	jmp endPlayerAnimation
 	
-anPly1000b:
+anPlay1000b:
 	
 	call moveRight
 	
-endCharMvmAni:
+endPlayerAnimation:
 	
+	pop dx
+	pop cx
 	pop bx
 	pop ax
 	pop bp
 	ret 8
-endp charMvmAni
+endp charAnimation
 
 
 

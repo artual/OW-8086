@@ -12,6 +12,7 @@ mov bp, sp
 inc bp
 inc bp
 push ax
+push es
 
 
 
@@ -19,17 +20,35 @@ push ax
 heroInput:
 	
 	call playerInput
-	mov [keyCodes], al
+	mov [keyCodePlayer], al
 	
 	
 evilInput:
 	
+	mov ax, 40h
+	mov es, ax
+	mov ax, clock
+	cmp ax, [tempClock]
+	JZ notTimeYet
+	
+	mov [tempClock], ax
+	push mx
+	push my
+	push [xEnemy]
+	push [yEnemy]
 	call enemyInput
-	mov [keyCodes + 2], al
+	mov [keyCodeEnemy], al
+	jmp endEvilInput
+	
+notTimeYet:
+	mov [keyCodeEnemy], 80h
+	
+endEvilInput:
 	
 
 
 	
+	pop es
 	pop ax
 	pop bp
 	ret

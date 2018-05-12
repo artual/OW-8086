@@ -11,6 +11,7 @@ par1 equ [bp + 2]
 mx equ [xOfPlayer]
 my equ [yOfPlayer]
 
+	include 'basic\rectangl.asm'
 
 DATASEG
 ; --------------------------
@@ -41,11 +42,15 @@ start:
 	mov ax, 13h
 	int 10h
 	
+	push 40
+	push mx
+	push my
+	call redDot
 	
+	jmp exit
 tests:
 
-	mov bx, 0h
-	mov ax, [xOfPlayer + bx]
+	
 	
 	
 	
