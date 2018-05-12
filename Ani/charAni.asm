@@ -20,7 +20,6 @@ par3 equ [bp + 6]
 par2 equ [bp + 4]
 par1 equ [bp + 2]
 
-	include 'basic\rectangl.asm'
 
 CODESEG
 

@@ -15,14 +15,15 @@ myPast equ [yPlayerPast]
 
 clock equ [es:6ch]
 	
-	include 'Main\Input.asm'
-	include 'basic\charInp.asm'
+	include 'Inp\Input.asm'
+	include 'Inp\charInp.asm'
 	
-	include 'Main\Calcul.asm'
-	include 'basic\charCal.asm'
+	include 'Cal\Calcul.asm'
+	include 'cal\charCal.asm'
 	
-	include 'Main\Graph.asm'
-	include 'basic\charAni.asm'
+	include 'Ani\Graph.asm'
+	include 'Ani\charAni.asm'
+	include 'Ani\rectangl.asm'
 
 DATASEG
 ; --------------------------

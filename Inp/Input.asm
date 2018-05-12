@@ -1,8 +1,5 @@
 
 
-
-
-
 IDEAL
 CODESEG
 
