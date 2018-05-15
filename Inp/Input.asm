@@ -34,7 +34,7 @@ evilInputs:
 	cmp ax, [charClock + bx]
 	JZ notTimeYet
 	
-	mov [charClock + 2h], ax
+	mov [charClock + bx], ax
 	push [xCords + 0h]
 	push [yCords + 0h]
 	push [xCords + bx]
