@@ -29,33 +29,42 @@ DATASEG
 ; --------------------------
 ; Your variables here
 ; --------------------------
-keyCodePlayer db (0)
+
+
+
+
+keyCode dw 2 dup (0)
 	; bit 8 = nothing
 	
-	; bit 1 = w
-	; bit 2 = a
-	; bit 3 = s
-	; bit 4 = d
-actionCodePlayer db (0)
+	; bit 1 = W
+	; bit 2 = A
+	; bit 3 = S
+	; bit 4 = D
+	; bit 5 = J
+	
+actionCode  dw 2 dup (0)
 	; bit 8 = nothing
 	
 	; bit 1 = up
 	; bit 2 = left
 	; bit 3 = down
 	; bit 4 = right
-xPlayer dw (150)
-xPlayerPast dw (0)
-yPlayer dw (100)
-yPlayerPast dw (0)
+	; bit 5 = punch
+	
+xCords dw (150)
+	   dw (310)
+xCordsPast dw 2 dup (0)
+yCords dw (100)
+	   dw (190)
+yCordsPast dw 2 dup (0)
 
-keyCodeEnemy db (0)
-actionCodeEnemy db (0)
-xEnemy dw (310)
-xEnemyPast dw (0)
-yEnemy dw (190)
-yEnemyPast dw (0)
+colorObject dw (28h)
+			dw (40h)
+			
+charClock dw 2 dup (0) ; for the enemy inputs
 
-tempClock dw (0)
+aniStatus dw 2 dup (0)
+aniClock dw 2 dup (0)
 
 CODESEG
 
@@ -63,8 +72,6 @@ start:
 	mov ax, @data
 	mov ds, ax
 	
-	mov ax, 0c00h
-	int 21h
 ; --------------------------
 ; Your code here
 ; --------------------------
@@ -74,13 +81,13 @@ start:
 	int 10h
 	
 	push 28h
-	push mx
-	push my
+	push [xCords + 0h]
+	push [yCords + 0h]
 	call spawn
 	
 	push 40h
-	push [xEnemy]
-	push [yEnemy]
+	push [xCords + 2h]
+	push [yCords + 2h]
 	call spawn
 	
 	mov ax, 0c00h

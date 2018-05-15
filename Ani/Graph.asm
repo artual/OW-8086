@@ -7,31 +7,28 @@ proc mainAnimation
 	inc bp
 	inc bp
 	push ax
+	push bx
 	
 	
 	
+	xor bx, bx
+mainAnimationLoop:
 	
 	
-heroAnimation:
-	mov al, [actionCodePlayer]
-	xor ah, ah
-	push ax ; actionCode
-	push 28h ; char(color)
-	push mxPast
-	push myPast
+	push [actionCode + bx]
+	push [colorObject + bx]
+	push [xCordsPast + bx]
+	push [yCordsPast + bx]
 	call charAnimation
 	
-evilAnimation:
-	mov al, [actionCodeEnemy]
-	xor ah, ah
-	push ax
-	push 40h
-	push [xEnemyPast]
-	push [yEnemyPast]
-	call charAnimation
+	inc bx
+	inc bx
+	cmp bx, 4h
+	JNZ mainAnimationLoop
 	
 	
 	
+	pop bx
 	pop ax
 	pop bp
 	ret

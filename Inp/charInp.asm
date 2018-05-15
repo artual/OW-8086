@@ -54,19 +54,19 @@ startPlayerInput:
 	JMP startPlayerInput
 	
 playerKey80h:
-	mov al, 80h
+	mov ax, 80h
 	jmp endPlayerInput
 playerKey0001b:
-	mov al, 0001b
+	mov ax, 0001b
 	jmp endPlayerInput
 playerKey0010b:
-	mov al,0010b
+	mov ax,0010b
 	jmp endPlayerInput
 playerKey0100b:
-	mov al, 0100b
+	mov ax, 0100b
 	jmp endPlayerInput
 playerKey1000b:
-	mov al, 1000b
+	mov ax, 1000b
 	
 endPlayerInput:
 	
@@ -84,7 +84,7 @@ endp playerInput
 ;                         Enemy                                                                      |
 ;____________________________________________________________________________________________________|
 
-; gets mx, my, enemyX, enemyY
+; gets player's x, player's y, it's x, it's y
 ; returns key code in al
 proc enemyInput
 	push bp

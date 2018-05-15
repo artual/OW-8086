@@ -177,10 +177,9 @@ proc charAnimation
 	push dx
 	
 	mov ax, par4
-	xor ah, ah
 	
 anPlay8h:
-	cmp al, 80h
+	cmp ax, 80h
 	JZ endPlayerAnimation
 	
 	push par3
@@ -188,21 +187,21 @@ anPlay8h:
 	push par1
 	
 anPlay0001b:
-	cmp al, 0001b
+	cmp ax, 0001b
 	JNZ anPlay0010b
 	
 	call moveUp
 	jmp endPlayerAnimation
 	
 anPlay0010b:
-	cmp al, 0010b
+	cmp ax, 0010b
 	JNZ anPlay0100b
 	
 	call moveLeft
 	jmp endPlayerAnimation
 	
 anPlay0100b:
-	cmp al, 0100b
+	cmp ax, 0100b
 	JNZ anPlay1000b
 	
 	call moveDown
