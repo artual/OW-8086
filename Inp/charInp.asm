@@ -109,19 +109,19 @@ yOfCharsEqual:
 	JL enemyAction0010b ; left
 	
 enemyAction80h:
-	mov al, 80h
+	mov ax, 80h
 	jmp endEnemyInput
 enemyAction0001b:
-	mov al, 0001b
+	mov ax, 0001b
 	jmp endEnemyInput
 enemyAction0010b:
-	mov al, 0010b
+	mov ax, 0010b
 	jmp endEnemyInput
 enemyAction0100b:
-	mov al, 0100b
+	mov ax, 0100b
 	jmp endEnemyInput
 enemyAction1000b:
-	mov al, 1000b
+	mov ax, 1000b
 
 endEnemyInput:
 	

@@ -19,11 +19,13 @@ clock equ [es:6ch]
 	include 'Inp\charInp.asm'
 	
 	include 'Cal\Calcul.asm'
-	include 'cal\charCal.asm'
+	include 'Cal\charCal.asm'
+	include 'Cal\hit.asm'
 	
 	include 'Ani\Graph.asm'
 	include 'Ani\charAni.asm'
 	include 'Ani\rectangl.asm'
+	include 'Ani\data.asm'
 
 DATASEG
 ; --------------------------
@@ -51,11 +53,11 @@ actionCode  dw 2 dup (0)
 	; bit 4 = right
 	; bit 5 = punch
 	
-xCords dw (150)
+xCords dw (260)
 	   dw (310)
 xCordsPast dw 2 dup (0)
 yCords dw (100)
-	   dw (190)
+	   dw (100)
 yCordsPast dw 2 dup (0)
 
 colorObject dw (28h)
@@ -66,6 +68,8 @@ charClock dw 2 dup (0) ; for the enemy inputs
 aniStatus dw 2 dup (0)
 aniClock dw 2 dup (0)
 
+living dw 2 dup (1)
+
 CODESEG
 
 start:
@@ -75,6 +79,8 @@ start:
 ; --------------------------
 ; Your code here
 ; --------------------------
+
+
 
 ;	graphic mode
 	mov ax, 13h
@@ -94,7 +100,14 @@ start:
 	int 21h
 	
 	
+	
 mainLoop:
+	
+	
+	
+	
+	
+	
 	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;; Inputs ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -112,6 +125,9 @@ mainLoop:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	
 	call mainCalculation
+	
+	
+	
 	
 	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
