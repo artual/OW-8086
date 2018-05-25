@@ -53,11 +53,11 @@ actionCode  dw 2 dup (0)
 	; bit 4 = right
 	; bit 5 = punch
 	
-xCords dw (260)
+xCords dw (150)
 	   dw (310)
 xCordsPast dw 2 dup (0)
 yCords dw (100)
-	   dw (100)
+	   dw (190)
 yCordsPast dw 2 dup (0)
 
 colorObject dw (28h)
