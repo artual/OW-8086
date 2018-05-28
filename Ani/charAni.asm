@@ -178,7 +178,7 @@ proc charAnimation
 	
 	mov ax, par4
 	
-anPlay8h:
+anPlay80h:
 	cmp ax, 80h
 	JZ endPlayerAnimation
 	
@@ -186,28 +186,28 @@ anPlay8h:
 	push par2
 	push par1
 	
-anPlay0001b:
-	cmp ax, 0001b
-	JNZ anPlay0010b
+anPlay1:
+	cmp ax, 1
+	JNZ anPlay2
 	
 	call moveUp
 	jmp endPlayerAnimation
 	
-anPlay0010b:
-	cmp ax, 0010b
-	JNZ anPlay0100b
+anPlay2:
+	cmp ax, 2
+	JNZ anPlay3
 	
 	call moveLeft
 	jmp endPlayerAnimation
 	
-anPlay0100b:
-	cmp ax, 0100b
-	JNZ anPlay1000b
+anPlay3:
+	cmp ax, 3
+	JNZ anPlay4
 	
 	call moveDown
 	jmp endPlayerAnimation
 	
-anPlay1000b:
+anPlay4:
 	
 	call moveRight
 	

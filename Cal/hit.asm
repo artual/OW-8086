@@ -5,7 +5,6 @@ message db "The enemy got hit", 10, 13, '$'
 
 CODESEG
 
-; gets object number
 proc gettingHit
 	
 	mov ax, 2h

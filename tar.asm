@@ -53,7 +53,7 @@ actionCode  dw 2 dup (0)
 	; bit 5 = punch
 	
 xCords dw (150)
-	   dw (310)
+	   dw (200)
 xCordsPast dw 2 dup (0)
 yCords dw (100)
 	   dw (190)
@@ -80,6 +80,10 @@ start:
 ; --------------------------
 
 
+	push ax
+	mov ax, offset yCordsPast
+	pop ax
+
 
 ;	graphic mode
 	mov ax, 13h
@@ -98,7 +102,9 @@ start:
 	mov ax, 0c00h
 	int 21h
 	
-	
+	push dx
+	mov dx, offset keyCode
+	pop dx
 	
 mainLoop:
 	
@@ -118,7 +124,6 @@ mainLoop:
 	
 	
 	
-	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;; Calculations ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -134,8 +139,9 @@ mainLoop:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	
 	
-	call mainAnimation
 	
+	
+	call mainAnimation
 	
 	
 	

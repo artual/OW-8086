@@ -1,7 +1,7 @@
 IDEAL
 CODESEG
 
-proc mainAnimation
+proc mainAnimation ; 0255
 	push bp
 	mov bp, sp
 	inc bp

@@ -18,7 +18,6 @@ proc charMvmCal
 	
 	
 	mov ax, [keyCode + bx]
-	mov [actionCode + bx], ax
 	
 	
 	cmp ax, 80h
@@ -38,17 +37,22 @@ proc charMvmCal
 	int 21h
 	
 mvmAct80h:
+	mov [word ptr actionCode + bx], 80h
 	jmp endMvmCal
 mvmAct0001b:
+	mov [word ptr actionCode + bx], 1
 	dec [word ptr yCords + bx]
 	jmp endMvmCal
 mvmAct0010b:
+	mov [word ptr actionCode + bx], 2
 	dec [word ptr xCords + bx]
 	jmp endMvmCal
 mvmAct0100b:
+	mov [word ptr actionCode + bx], 3
 	inc [word ptr yCords + bx]
 	jmp endMvmCal
 mvmAct1000b:
+	mov [word ptr actionCode + bx], 4
 	inc [word ptr xCords + bx]
 	
 endMvmCal:
@@ -66,7 +70,7 @@ endp charMvmCal
 	
 ; gets number of object
 ; sets action codes 5, 6
-proc charPunchCheck
+proc charPunchCheck ; 01B7
 	push bp
 	mov bp, sp
 	inc bp
@@ -77,12 +81,12 @@ proc charPunchCheck
 	
 	mov bx, par1
 	
-	mov [word ptr actionCode + bx], 0h ; FIX THIS
+	mov [word ptr actionCode + bx], 80h ; FIX THIS
 	
 	
 	
 	; loop all the possible defending objects
-	mov si, 0h
+	xor si, si
 checkIfGotPunched:
 ;{
 	
@@ -96,10 +100,12 @@ checkIfGotPunched:
 	
 	; if the attacking object is also the defending ~~AND~~ 
 	; its the end of the loop, quit the proc
-	pop si
-	pop bx
-	pop bp
-	ret 2
+	; pop si
+	; pop bx
+	; pop ax
+	; pop bp
+	; ret 2
+	jmp endCharPunchCheck
 	
 	; the defending object isnt also the attacking object
 objectAIsntObjectB:
@@ -115,11 +121,12 @@ objectAIsntObjectB:
 	; move to its actionCode and keyCode 6h
 	cmp al, 1h
 	JNZ endCheckIfGotPunched
-	mov [word ptr actionCode + si], 0h ; FIX THIS
-	mov [word ptr keyCode + si], 0h
 	
-	push si
 	call gettingHit
+	
+	; mov [word ptr actionCode + si], 0h ; FIX THIS
+	; mov [word ptr keyCode + si], 0h
+	
 	
 
 endCheckIfGotPunched:	
@@ -130,59 +137,63 @@ endCheckIfGotPunched:
 	JNZ checkIfGotPunched
 ;}
 	
+endCharPunchCheck:
 	
 	
 	pop si
 	pop bx
 	pop ax
+	pop bp
 	ret 2
 endp charPunchCheck
 
 
+; to do facing, switch between 8 and 12 (x)
 ; gets (x, y) player, (x, y) enemy
 ; returns answer in al (1 if yes, 0 if no)
-proc punchRangeCheck
+proc punchRangeCheck ; 0202
 	push bp
 	mov bp, sp
 	inc bp
 	inc bp
-	push ax
 	
 	
 	; jmp if (xPlayer + 5) < xEnemy
+	; if the enemy is 12 right to player
 	mov ax, par4
-	add ax, 5
+	add ax, 12
 	cmp ax, par2
 	JL doesntGetPunched
 	
 	; jmp if (xPlayer - 5) > xEnemy
+	; if the enemy is left 5 to player
 	mov ax, par4
-	sub ax, 5
+	sub ax, 8
 	cmp ax, par2
 	JG doesntGetPunched
 	
 	; jmp if (yPlayer + 5) < yEnemy
+	; if the enemy is 5 below player
 	mov ax, par3
-	add ax, 5
+	add ax, 8
 	cmp ax, par1
 	JL doesntGetPunched
 	
 	; jmp if (yPlyaer - 5) > yEnemy
+	; if the enemy is 5 above player
 	mov ax, par3
-	sub ax, 5
+	sub ax, 8
 	cmp ax, par1
 	JG doesntGetPunched
 	
 	
 doesGetPunched:
 	mov al, 1
-	pop ax
 	pop bp
 	ret 8
 	
 doesntGetPunched:
 	mov al, 0
-	pop ax
 	pop bp
 	ret 8
 	

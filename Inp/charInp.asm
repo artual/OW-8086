@@ -44,29 +44,35 @@ startPlayerInput:
 	int 16h
 	
 	cmp ah, 11h ; 11h = W
-	JZ playerKey0001b
+	JZ playerKey00001b
 	cmp ah, 1eh ; 1eh = A
-	JZ playerKey0010b
+	JZ playerKey00010b
 	cmp ah, 1fh ; 1fh = S
-	JZ playerKey0100b
+	JZ playerKey00100b
 	cmp ah, 20h ; 20h = D
-	JZ playerKey1000b
+	JZ playerKey01000b
+	cmp ah, 24h ; 24h = J
+	JZ playerKey10000b
 	JMP startPlayerInput
 	
 playerKey80h:
 	mov ax, 80h
 	jmp endPlayerInput
-playerKey0001b:
-	mov ax, 0001b
+playerKey00001b:
+	mov ax, 00001b
 	jmp endPlayerInput
-playerKey0010b:
-	mov ax,0010b
+playerKey00010b:
+	mov ax, 00010b
 	jmp endPlayerInput
-playerKey0100b:
-	mov ax, 0100b
+playerKey00100b:
+	mov ax, 00100b
 	jmp endPlayerInput
-playerKey1000b:
-	mov ax, 1000b
+playerKey01000b:
+	mov ax, 01000b
+	jmp endPlayerInput
+playerKey10000b:
+	mov ax, 10000b
+	jmp endPlayerInput
 	
 endPlayerInput:
 	
