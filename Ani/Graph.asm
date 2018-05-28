@@ -39,10 +39,13 @@ actionCodeBIG4:
 	cmp ax, 5
 	JG actionCodeBIG5
 	
-	JMP endMainAnimationLoop ; REMOVE THIS ONCE THE FIGHTING ANIMATION IS DONE
+	; JMP endMainAnimationLoop ; REMOVE THIS ONCE THE FIGHTING ANIMATION IS DONE
+	
+	
 	
 	push bx
 	call givePunch
+	
 	
 	jmp endMainAnimationLoop
 	

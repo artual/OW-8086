@@ -201,19 +201,28 @@ proc givePunch
 	mov ax, clock
 	mov [aniClock + bx], ax
 	
+	
+	
+	
 	; put 1 in the animation status
 	mov [aniStatus + bx], 1h
 	
+	JMP notPunchYet
+	
 midGivePunch:
-	; check if to still hold punch
+	; check if still to hold punch
 	mov ax, 40h
 	mov es, ax
 	mov ax, clock
 	cmp ax, [aniClock + bx]
 	JZ notPunchYet
 	
-	; reset clock
-	mov [aniClock + bx], ax
+	inc [aniCounter + bx] ; NEED HELP REPAIRING
+	cmp [aniCounter + bx], 0ffffh
+	JNZ notPunchYet
+	
+	mov [aniCounter + bx], 0
+	
 	
 	; reset punch
 	push 0h
@@ -233,11 +242,12 @@ midGivePunch:
 	
 notPunchYet:
 	
+	
 	pop es
 	pop bx
 	pop ax
 	pop bp
-	ret 8
+	ret 2
 endp givePunch
 
 

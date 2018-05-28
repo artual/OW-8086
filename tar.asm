@@ -52,6 +52,8 @@ actionCode  dw 2 dup (0)
 	; bit 4 = right
 	; bit 5 = punch
 	
+
+	
 xCords dw (150)
 	   dw (310)
 xCordsPast dw 2 dup (0)
@@ -66,6 +68,7 @@ charClock dw 2 dup (0) ; for the enemy inputs
 
 aniStatus dw 2 dup (0)
 aniClock dw 2 dup (0)
+aniCounter dw 2 dup (0)
 
 living dw 2 dup (1)
 
@@ -141,7 +144,6 @@ mainLoop:
 	
 	
 	call mainAnimation
-	
 	
 	
 	

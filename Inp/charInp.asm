@@ -37,42 +37,42 @@ proc playerInput
 	
 startPlayerInput:
 	
-	mov ah, 7h
-	int 21h
+	; mov ah, 7h
+	; int 21h
 	
-	cmp al, 77h ; ascci 77h
-	JZ playerKey00001b
-	cmp al, 61h ; ascii 61h
-	JZ playerKey00010b
-	cmp al, 73h ; ascii 73h
-	JZ playerKey00100b
-	cmp al, 64h ; ascii 64h
-	JZ playerKey01000b
-	cmp al, 6ah ; ascii 6ah
-	JZ playerKey10000b
-	JMP startPlayerInput
-	
-	
-	
-	
-	; mov ah, 1
-	; int 16h
-	; JZ playerKey80h
-	; mov ah, 0h
-	; int 16h
-	
-	
-	; cmp ah, 11h ; 11h = W
+	; cmp al, 77h ; ascci 77h
 	; JZ playerKey00001b
-	; cmp ah, 1eh ; 1eh = A
+	; cmp al, 61h ; ascii 61h
 	; JZ playerKey00010b
-	; cmp ah, 1fh ; 1fh = S
+	; cmp al, 73h ; ascii 73h
 	; JZ playerKey00100b
-	; cmp ah, 20h ; 20h = D
+	; cmp al, 64h ; ascii 64h
 	; JZ playerKey01000b
-	; cmp ah, 24h ; 24h = J
+	; cmp al, 6ah ; ascii 6ah
 	; JZ playerKey10000b
 	; JMP startPlayerInput
+	
+	
+	
+	
+	mov ah, 1
+	int 16h
+	JZ playerKey80h
+	mov ah, 0h
+	int 16h
+	
+	
+	cmp ah, 11h ; 11h = W
+	JZ playerKey00001b
+	cmp ah, 1eh ; 1eh = A
+	JZ playerKey00010b
+	cmp ah, 1fh ; 1fh = S
+	JZ playerKey00100b
+	cmp ah, 20h ; 20h = D
+	JZ playerKey01000b
+	cmp ah, 24h ; 24h = J
+	JZ playerKey10000b
+	JMP startPlayerInput
 	
 playerKey80h:
 	mov ax, 80h
