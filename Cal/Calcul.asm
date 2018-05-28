@@ -116,6 +116,7 @@ keyCodeBIG5:
 	cmp ax, 100000b
 	JG keyCodeBIG6
 	
+	push bx
 	call gettingHit
 	
 	; mov [word ptr actionCode + bx], 6

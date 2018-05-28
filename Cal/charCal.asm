@@ -31,7 +31,23 @@ proc charMvmCal
 	cmp ax, 1000b
 	JZ mvmAct1000b
 	
+	mov dl, ah
+	add dl, 30h
+	mov ah, 2
+	int 21h
+	mov dl, al
+	add dl, 30h
+	mov ah, 2
+	int 21h
 	
+	mov dl, bl
+	add dl, 30h
+	mov ah, 2
+	int 21h
+	
+	mov dl, 'b'
+	mov ah, 2
+	int 21h
 	
 	mov ax, 4c00h ; NEED TO REMOVE THIS IN THE END PLEAAAAAAAAAAAAAAAAAAAAAAAAAAASE ; ITS TESTINGGG
 	int 21h
@@ -81,7 +97,7 @@ proc charPunchCheck ; 01B7
 	
 	mov bx, par1
 	
-	mov [word ptr actionCode + bx], 80h ; FIX THIS
+	mov [word ptr actionCode + bx], 5
 	
 	
 	
@@ -100,11 +116,6 @@ checkIfGotPunched:
 	
 	; if the attacking object is also the defending ~~AND~~ 
 	; its the end of the loop, quit the proc
-	; pop si
-	; pop bx
-	; pop ax
-	; pop bp
-	; ret 2
 	jmp endCharPunchCheck
 	
 	; the defending object isnt also the attacking object
@@ -122,10 +133,10 @@ objectAIsntObjectB:
 	cmp al, 1h
 	JNZ endCheckIfGotPunched
 	
+	push si
 	call gettingHit
 	
-	; mov [word ptr actionCode + si], 0h ; FIX THIS
-	; mov [word ptr keyCode + si], 0h
+	
 	
 	
 
