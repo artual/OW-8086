@@ -25,7 +25,6 @@ clock equ [es:6ch]
 	include 'Ani\Graph.asm'
 	include 'Ani\charAni.asm'
 	include 'Ani\rectangl.asm'
-	include 'Ani\data.asm'
 
 DATASEG
 ; --------------------------

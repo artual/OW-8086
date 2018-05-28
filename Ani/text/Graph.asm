@@ -1,6 +1,8 @@
 IDEAL
 CODESEG
 
+	include 'data.asm'
+
 proc mainAnimation
 	push bp
 	mov bp, sp
