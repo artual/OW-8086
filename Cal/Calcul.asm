@@ -78,9 +78,9 @@ proc mainCalculation
 	; ANOTHER VERSION
 	
 
-
 xor bx, bx
 mainCalculationLoop:
+	
 	
 	; is the object in animation
 	cmp [word ptr aniStatus + bx], 1h
@@ -141,7 +141,7 @@ keyCodeBIG6:
 endMainCalculationLoop:
 	inc bx
 	inc bx
-	cmp bx, 4h
+	cmp bx, 4
 	JNZ mainCalculationLoop
 
 

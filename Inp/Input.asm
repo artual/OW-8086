@@ -4,14 +4,13 @@ IDEAL
 CODESEG
 
 proc mainInput
-push bp
-mov bp, sp
-inc bp
-inc bp
-push ax
-push bx
-push es
-
+	push bp
+	mov bp, sp
+	inc bp
+	inc bp
+	push ax
+	push bx
+	push es
 
 
 
@@ -50,7 +49,7 @@ endmainInputLoop:
 	
 	inc bx
 	inc bx
-	cmp bx, 4h
+	cmp bx, 4
 	JNZ mainInputLoop
 	
 	

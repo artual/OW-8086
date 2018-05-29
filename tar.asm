@@ -34,7 +34,7 @@ DATASEG
 
 
 
-keyCode dw 2 dup (0)
+keyCode dw 5 dup (0)
 	; bit 8 = nothing
 	
 	; bit 1 = W
@@ -43,7 +43,7 @@ keyCode dw 2 dup (0)
 	; bit 4 = D
 	; bit 5 = J
 	
-actionCode  dw 2 dup (0)
+actionCode  dw 5 dup (0)
 	; bit 8 = nothing
 	
 	; bit 1 = up
@@ -56,21 +56,27 @@ actionCode  dw 2 dup (0)
 	
 xCords dw (150)
 	   dw (310)
-xCordsPast dw 2 dup (0)
+	   dw (310)
+	   dw (0)
+	   dw (0)
+xCordsPast dw 5 dup (0)
 yCords dw (100)
 	   dw (190)
-yCordsPast dw 2 dup (0)
+	   dw (0)
+	   dw (190)
+	   dw (0)
+yCordsPast dw 5 dup (0)
 
 colorObject dw (28h)
-			dw (40h)
+			dw 4 dup (40h)
 			
-charClock dw 2 dup (0) ; for the enemy inputs
+charClock dw 5 dup (0) ; for the enemy inputs
 
-aniStatus dw 2 dup (0)
-aniClock dw 2 dup (0)
-aniCounter dw 2 dup (0)
+aniStatus dw 5 dup (0)
+aniClock dw 5 dup (0)
+aniCounter dw 5 dup (0)
 
-living dw 2 dup (1)
+living dw 5 dup (1)
 
 CODESEG
 
@@ -102,9 +108,6 @@ start:
 	mov ax, 0c00h
 	int 21h
 	
-	push dx
-	mov dx, offset keyCode
-	pop dx
 	
 mainLoop:
 	
@@ -119,7 +122,6 @@ mainLoop:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 	
-	
 	call mainInput
 	
 	
@@ -130,7 +132,6 @@ mainLoop:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	
 	
-	
 	call mainCalculation
 	
 	
@@ -139,7 +140,6 @@ mainLoop:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;; Animation ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	
 	
 	
 	

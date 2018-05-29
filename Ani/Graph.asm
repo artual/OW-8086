@@ -42,7 +42,6 @@ actionCodeBIG4:
 	; JMP endMainAnimationLoop ; REMOVE THIS ONCE THE FIGHTING ANIMATION IS DONE
 	
 	
-	
 	push bx
 	call givePunch
 	
@@ -77,7 +76,7 @@ endMainAnimationLoop:
 	
 	inc bx
 	inc bx
-	cmp bx, 4h
+	cmp bx, 4
 	JNZ mainAnimationLoop
 	
 	
