@@ -2,11 +2,11 @@ IDEAL
 MODEL small
 STACK 100h
 
-par5 equ [bp + 10]
-par4 equ [bp + 8]
-par3 equ [bp + 6]
-par2 equ [bp + 4]
-par1 equ [bp + 2]
+par5 equ [word ptr bp + 10]
+par4 equ [word ptr bp + 8]
+par3 equ [word ptr bp + 6]
+par2 equ [word ptr bp + 4]
+par1 equ [word ptr bp + 2]
 
 mx equ [xPlayer]
 mxPast equ [xPlayerPast]
@@ -17,6 +17,7 @@ clock equ [es:6ch]
 	
 	include 'Inp\Input.asm'
 	include 'Inp\charInp.asm'
+	include 'Inp\enemyAi.asm'
 	
 	include 'Cal\Calcul.asm'
 	include 'Cal\charCal.asm'
@@ -52,7 +53,7 @@ actionCode  dw 5 dup (0)
 	; bit 4 = right
 	; bit 5 = punch
 	
-
+facing dw 5 dup (0)
 	
 xCords dw (150)
 	   dw (310)
@@ -69,8 +70,12 @@ yCordsPast dw 5 dup (0)
 
 colorObject dw (28h)
 			dw 4 dup (40h)
-			
+
+
+
 charClock dw 5 dup (0) ; for the enemy inputs
+enemyChances dw 5 dup (0)
+
 
 aniStatus dw 5 dup (0)
 aniClock dw 5 dup (0)
@@ -107,6 +112,7 @@ start:
 	
 	mov ax, 0c00h
 	int 21h
+	
 	
 	
 mainLoop:

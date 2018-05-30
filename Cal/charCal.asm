@@ -62,6 +62,7 @@ mvmAct0001b:
 mvmAct0010b:
 	mov [word ptr actionCode + bx], 2
 	dec [word ptr xCords + bx]
+	mov [word ptr facing + bx], 1
 	jmp endMvmCal
 mvmAct0100b:
 	mov [word ptr actionCode + bx], 3
@@ -70,6 +71,7 @@ mvmAct0100b:
 mvmAct1000b:
 	mov [word ptr actionCode + bx], 4
 	inc [word ptr xCords + bx]
+	mov [word ptr facing + bx], 0
 	
 endMvmCal:
 	
@@ -122,10 +124,11 @@ checkIfGotPunched:
 objectAIsntObjectB:
 	
 	; check if the object got punched
-	push [word ptr xCords + bx]
-	push [word ptr yCords + bx]
-	push [word ptr xCords + si]
-	push [word ptr yCords + si]
+	push [facing + bx]
+	push [xCords + bx]
+	push [yCords + bx]
+	push [xCords + si]
+	push [yCords + si]
 	call punchRangeCheck
 	
 	; if the object is successfully punched,
@@ -159,39 +162,68 @@ endCharPunchCheck:
 endp charPunchCheck
 
 
-; to do facing, switch between 8 and 12 (x)
-; gets (x, y) player, (x, y) enemy
+; gets facing, (x, y) player, (x, y) enemy
 ; returns answer in al (1 if yes, 0 if no)
 proc punchRangeCheck ; 0202
 	push bp
 	mov bp, sp
 	inc bp
 	inc bp
+	push bx
+	
+	mov bx, par5
+	cmp bx, 1
+	JZ punchRangeCheckLeft
 	
 	
-	; jmp if (xPlayer + 5) < xEnemy
+	
+	; jmp if (xPlayer + 12) < xEnemy
 	; if the enemy is 12 right to player
 	mov ax, par4
 	add ax, 12
 	cmp ax, par2
 	JL doesntGetPunched
 	
-	; jmp if (xPlayer - 5) > xEnemy
-	; if the enemy is left 5 to player
+	; jmp if (xPlayer - 8) > xEnemy
+	; if the enemy is left 8 to player
 	mov ax, par4
 	sub ax, 8
 	cmp ax, par2
 	JG doesntGetPunched
 	
-	; jmp if (yPlayer + 5) < yEnemy
-	; if the enemy is 5 below player
+	
+	
+	JMP punchRangeCheckNeut
+	
+punchRangeCheckLeft:
+
+	; jmp if (xPlayer + 8) < xEnemy
+	; if the enemy is 8 right to player
+	mov ax, par4
+	add ax, 8
+	cmp ax, par2
+	JL doesntGetPunched
+	
+	; jmp if (xPlayer - 12) > xEnemy
+	; if the enemy is left 12 to player
+	mov ax, par4
+	sub ax, 12
+	cmp ax, par2
+	JG doesntGetPunched
+	
+	
+	
+	
+punchRangeCheckNeut:
+	; jmp if (yPlayer + 8) < yEnemy
+	; if the enemy is 8 below player
 	mov ax, par3
 	add ax, 8
 	cmp ax, par1
 	JL doesntGetPunched
 	
-	; jmp if (yPlyaer - 5) > yEnemy
-	; if the enemy is 5 above player
+	; jmp if (yPlyaer - 8) > yEnemy
+	; if the enemy is 8 above player
 	mov ax, par3
 	sub ax, 8
 	cmp ax, par1
@@ -200,13 +232,15 @@ proc punchRangeCheck ; 0202
 	
 doesGetPunched:
 	mov al, 1
+	pop bx
 	pop bp
-	ret 8
+	ret 10
 	
 doesntGetPunched:
 	mov al, 0
+	pop bx
 	pop bp
-	ret 8
+	ret 10
 	
 endp punchRangeCheck
 

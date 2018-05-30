@@ -109,8 +109,8 @@ endp playerInput
 ;                         Enemy                                                                      |
 ;____________________________________________________________________________________________________|
 
-; gets player's x, player's y, it's x, it's y
-; returns key code in al
+; gets facing, (x, y) it's, (x, y) player
+; returns key code in ax
 proc enemyInput
 	push bp
 	mov bp, sp
@@ -118,41 +118,56 @@ proc enemyInput
 	inc bp
 	push bx
 	
-	mov ax, par3
-	mov bx, par1
-	cmp ax, bx
-	JE yOfCharsEqual
-	JG enemyAction0100b ; down
-	JL enemyAction0001b ; up
 	
-yOfCharsEqual:
-	mov ax, par4
-	mov bx, par2
-	cmp ax, bx
-	JE enemyAction80h
-	JG enemyAction1000b ; right
-	JL enemyAction0010b ; left
 	
-enemyAction80h:
-	mov ax, 80h
-	jmp endEnemyInput
-enemyAction0001b:
-	mov ax, 0001b
-	jmp endEnemyInput
-enemyAction0010b:
-	mov ax, 0010b
-	jmp endEnemyInput
-enemyAction0100b:
-	mov ax, 0100b
-	jmp endEnemyInput
-enemyAction1000b:
-	mov ax, 1000b
+	push par5
+	push par4
+	push par3
+	push par2
+	push par1
+	call punchOrMove
+	
+	cmp al, 0
+	JZ movingAlgo ; jump if move
+	
+	; create a random number in bx
+	; then do a 1 in 16 chance, if chance is met -
+	; - it will punch
+	mov ax, 40h
+	mov es, ax
+	mov bx, clock
+	xor bx, [cs:bx]
+	
+	and bx, 00001111h
+	cmp bl, 1
+	JNZ movingAlgo
+	
+	
+	mov ax, 10000b ; move ax, keyCode for punch
+	JMP endEnemyInput
+	
+	
+movingAlgo:
+	
+	
+	
+	
+	push par4
+	push par3
+	push par2
+	push par1
+	call enemyMvmAlgo
+	
+	
+	
+	
+	
 
 endEnemyInput:
 	
 	pop bx
 	pop bp
-	ret 8
+	ret 10
 endp enemyInput
 
 

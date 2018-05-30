@@ -188,7 +188,13 @@ proc givePunch
 	push 2
 	push 2
 	mov ax, [xCords + bx]
+	cmp [word ptr facing], 1
+	JZ createPunchLeftAni
 	add ax, 10
+	JMP createPunchAni
+createPunchLeftAni:
+	sub ax, 2
+createPunchAni:
 	push ax
 	mov ax, [yCords + bx]
 	add ax, 3
@@ -217,11 +223,11 @@ midGivePunch:
 	cmp ax, [aniClock + bx]
 	JZ notPunchYet
 	
-	inc [aniCounter + bx] ; NEED HELP REPAIRING
-	cmp [aniCounter + bx], 0ffffh
+	inc [word ptr aniCounter + bx] ; NEED HELP REPAIRING
+	cmp [word ptr aniCounter + bx], 0ffffh
 	JNZ notPunchYet
 	
-	mov [aniCounter + bx], 0
+	mov [word ptr aniCounter + bx], 0
 	
 	
 	; reset punch
@@ -229,7 +235,13 @@ midGivePunch:
 	push 2
 	push 2
 	mov ax, [xCords + bx]
+	cmp [word ptr facing + bx], 1
+	JZ removePunchLeftAni
 	add ax, 10
+	JMP removePunchAni
+removePunchLeftAni:
+	sub ax, 2
+removePunchAni:
 	push ax
 	mov ax, [yCords + bx]
 	add ax, 3

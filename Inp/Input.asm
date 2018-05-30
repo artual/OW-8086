@@ -34,6 +34,8 @@ evilInputs:
 	JZ notTimeYet
 	
 	mov [charClock + bx], ax
+	
+	push [facing + bx]
 	push [xCords + 0h]
 	push [yCords + 0h]
 	push [xCords + bx]
