@@ -166,6 +166,235 @@ endp moveRight
 
 
 
+
+; gets color, x, y
+; moves char to left-up
+proc moveLeftUp
+	push bp
+	mov bp, sp
+	inc bp
+	inc bp
+	push ax
+	
+	
+	; Erasing
+	
+	push 0 ; color
+	push 10 ; rows
+	mov ax, par2
+	add ax, 9
+	push ax ; x
+	push par1 ; y
+	call redColumn
+	
+	push 0 ; color
+	push 9 ; columns
+	push par2 ; x
+	mov ax, par1
+	add ax, 9
+	push ax ; y
+	call redLine
+	
+	
+	; Creating
+	
+	push par3 ; color
+	push 10 ; rows
+	mov ax, par2
+	dec ax
+	push ax ; x
+	mov ax, par1
+	dec ax
+	push ax ; y
+	call redColumn
+	
+	push par3 ; color
+	push 9 ; columns
+	push par2 ; x
+	mov ax, par1
+	dec ax
+	push ax ; y
+	call redLine
+	
+	
+	
+	pop ax
+	pop bp
+	ret 6
+endp moveLeftUp
+
+
+; gets color, x, y
+; moves char to left-down
+proc moveLeftDown
+	push bp
+	mov bp, sp
+	inc bp
+	inc bp
+	push ax
+	
+	; Erasing
+	
+	push 0 ; color
+	push 10 ; rows
+	mov ax, par2
+	add ax, 9
+	push ax ; x
+	push par1 ; y
+	call redColumn
+	
+	push 0 ; color
+	push 9 ; columns
+	push par2 ; x
+	push par1 ; y
+	call redLine
+	
+	
+	; Creating
+	
+	push par3 ; color
+	push 10 ; rows
+	mov ax, par2
+	dec ax
+	push ax ; x
+	mov ax, par1
+	inc ax
+	push ax ; y
+	call redColumn
+	
+	push par3 ; color
+	push 9 ; columns
+	push par2 ; x
+	mov ax, par1
+	add ax, 10
+	push ax ; y
+	call redLine
+	
+	pop ax
+	pop bp
+	ret 6
+endp moveLeftDown
+
+
+; gets color, x, y
+; moves char to right-up
+proc moveRightUp
+	push bp
+	mov bp, sp
+	inc bp
+	inc bp
+	push ax
+	
+	; Erasing
+	
+	push 0 ; color
+	push 10 ; rows
+	push par2 ; x
+	push par1 ; y
+	call redColumn
+	
+	push 0 ; color
+	push 9 ; columns
+	mov ax, par2
+	inc ax
+	push ax ; x
+	mov ax, par1
+	add ax, 9
+	push ax ; y
+	call redLine
+	
+	
+	; Creating
+	
+	push par3 ; color
+	push 10 ; rows
+	mov ax, par2
+	add ax, 10
+	push ax ; x
+	mov ax, par1
+	dec ax
+	push ax ; y
+	call redColumn
+	
+	push par3 ; color
+	push 9 ; columns
+	mov ax, par2
+	inc ax
+	push ax ; x
+	mov ax, par1
+	dec ax
+	push ax ; y
+	call redLine
+	
+	pop ax
+	pop bp
+	ret 6
+endp moveRightUp
+
+
+
+; gets color, x, y
+; moves char to right-down
+proc moveRightDown
+	push bp
+	mov bp, sp
+	inc bp
+	inc bp
+	push ax
+	
+	; Erasing
+	
+	push 0 ; color
+	push 10 ; rows
+	push par2 ; x
+	push par1 ; y
+	call redColumn
+	
+	push 0 ; color
+	push 9 ; columns
+	mov ax, par2
+	inc ax
+	push ax ; x
+	push par1 ; y
+	call redLine
+	
+	
+	; Creating
+	
+	push par3 ; color
+	push 10 ; rows
+	mov ax, par2
+	add ax, 10
+	push ax ; x
+	mov ax, par1
+	inc ax
+	push ax ; y
+	call redColumn
+	
+	push par3 ; color
+	push 9 ; columns
+	mov ax, par2
+	inc ax
+	push ax ; x
+	mov ax, par1
+	add ax, 10
+	push ax ; y
+	call redLine
+	
+	pop ax
+	pop bp
+	ret 6
+endp moveRightDown
+
+
+
+
+
+
+
+
+
+
 ; gets objectNum
 ; prints punch
 proc givePunch
@@ -275,11 +504,11 @@ proc charMvmAni
 	inc bp
 	push ax
 	
-	mov ax, par4
-	
 	push par3
 	push par2
 	push par1
+	
+	mov ax, par4
 	
 	cmp ax, 1
 	JZ mvmAni1
@@ -289,6 +518,14 @@ proc charMvmAni
 	JZ mvmAni3
 	cmp ax, 4
 	JZ mvmAni4
+	cmp ax, 5
+	JZ mvmAni5
+	cmp ax, 6
+	JZ mvmAni6
+	cmp ax, 7
+	JZ mvmAni7
+	cmp ax, 8
+	JZ mvmAni8
 	
 	mov ax, 4c00h ; NEED TO REMOVE THIS IN THE END PLEAAAAAAAAAAAAAAAAAAAAAAAAAAASE ; ITS TESTINGGG
 	int 21h
@@ -305,6 +542,20 @@ mvmAni3:
 	jmp endMvmAni
 mvmAni4:
 	call moveRight
+	jmp endMvmAni
+mvmAni5:
+	call moveLeftUp
+	jmp endMvmAni
+mvmAni6:
+	call moveLeftDown
+	jmp endMvmAni
+mvmAni7:
+	call moveRightUp
+	jmp endMvmAni
+mvmAni8:
+	call moveRightDown
+	
+	
 	
 endMvmAni:
 

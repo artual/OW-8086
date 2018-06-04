@@ -1,7 +1,9 @@
 IDEAL
+	include 'Ani\text\data.asm'
+	
+	
 CODESEG
 
-	include 'data.asm'
 
 proc mainAnimation
 	push bp
@@ -16,7 +18,7 @@ proc mainAnimation
 	mov ah, 9h
 	int 21h
 	
-	mov bx, 2h
+	mov bx, 0h
 mainAnimationLoop:
 	
 	
@@ -24,9 +26,14 @@ mainAnimationLoop:
 	mov [objectNumIW4], bl
 	add [objectNumIW4], 30h
 	
+	mov ax, [living + bx]
+	add al, 30h
+	mov [livingIW4], al
+	
 	mov ax, [keyCode + bx]
 	add al, 30h
 	mov [keyCodesIW4], al
+	
 	
 	mov ax, [actionCode + bx]
 	add al, 30h
@@ -101,7 +108,7 @@ mainAnimationLoop2:
 	
 	inc bx
 	inc bx
-	cmp bx, 4h
+	cmp bx, numberOfObjectsNow
 	JNZ mainAnimationLoop1
 	
 	

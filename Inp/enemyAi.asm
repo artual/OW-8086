@@ -4,7 +4,7 @@ CODESEG
 
 ; gets facing, (x, y) it's, (x, y) player
 ; returns answer in al (1 if yes, 0 if no)
-proc punchOrMove
+proc punchOrMove ; 0e3
 	push bp
 	mov bp, sp
 	inc bp
@@ -98,7 +98,7 @@ endp punchOrMove
 	
 ; gets (x, y) it's, (x, y) player
 ; returns key code in ax
-proc enemyMvmAlgo
+proc enemyMvmAlgo ; 0144
 	push bp
 	mov bp, sp
 	inc bp
@@ -113,35 +113,45 @@ proc enemyMvmAlgo
 	; call subXOrY
 	
 	
+	mov ax, 80h
 	
 	
-	mov ax, par3
-	cmp ax, par1
-	JE yOfCharsEqual
+	mov bx, par3
+	cmp bx, par1
+	JE decideMoveX
 	JG enemyAction0100b ; down
 	JL enemyAction0001b ; up
 	
-yOfCharsEqual:
-	mov ax, par4
-	cmp ax, par2
-	JE enemyAction80h
+enemyAction0001b:
+	add ax, 0001b
+	and ax, 7fh
+	JMP decideMoveX
+enemyAction0100b:
+	add ax, 0100b
+	and ax, 7fh
+	
+	
+decideMoveX:
+	mov bx, par4
+	cmp bx, par2
+	JE endEnemyMvmAlgo
 	JG enemyAction1000b ; right
 	JL enemyAction0010b ; left
 	
-enemyAction80h:
-	mov ax, 80h
-	jmp endEnemyMvmAlgo
-enemyAction0001b:
-	mov ax, 0001b
-	jmp endEnemyMvmAlgo
 enemyAction0010b:
-	mov ax, 0010b
-	jmp endEnemyMvmAlgo
-enemyAction0100b:
-	mov ax, 0100b
+	add ax, 0010b
+	and ax, 7fh
 	jmp endEnemyMvmAlgo
 enemyAction1000b:
-	mov ax, 1000b
+	add ax, 1000b
+	and ax, 7fh
+	jmp endEnemyMvmAlgo
+	
+	
+
+
+
+
 	
 	
 	

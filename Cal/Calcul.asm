@@ -80,7 +80,9 @@ proc mainCalculation
 
 xor bx, bx
 mainCalculationLoop:
-	
+	; is the object dead
+	cmp [word ptr living + bx], 0h
+	JZ endMainCalculationLoop
 	
 	; is the object in animation
 	cmp [word ptr aniStatus + bx], 1h
@@ -95,7 +97,7 @@ mainCalculationLoop:
 	mov ax, [keyCode + bx]
 	
 	; if the key isn't between 0, 4 (Mvm), jmp
-	cmp ax, 1000b
+	cmp ax, 1111b
 	JG keyCodeBIG4
 	
 	push bx
@@ -141,7 +143,7 @@ keyCodeBIG6:
 endMainCalculationLoop:
 	inc bx
 	inc bx
-	cmp bx, 4
+	cmp bx, numberOfObjectsNow
 	JNZ mainCalculationLoop
 
 

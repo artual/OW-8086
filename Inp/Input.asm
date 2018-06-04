@@ -16,10 +16,20 @@ proc mainInput
 
 	xor bx, bx
 mainInputLoop:
-
+	cmp [word ptr living + bx], 0
+	jz endmainInputLoop
+	
 	cmp bx, 0h
 	JNZ evilInputs
 	
+	
+	; mov ax, 40h
+	; mov es, ax
+	; mov ax, clock
+	; cmp ax, [charClock + bx]
+	; JZ notTimeYet
+	
+	; push bx
 	call playerInput
 	mov [keyCode + bx], ax
 	jmp endmainInputLoop
@@ -51,7 +61,7 @@ endmainInputLoop:
 	
 	inc bx
 	inc bx
-	cmp bx, 4
+	cmp bx, numberOfObjectsNow
 	JNZ mainInputLoop
 	
 	

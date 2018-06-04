@@ -22,18 +22,15 @@ CODESEG
 ;                         Player                                                                     |
 ;____________________________________________________________________________________________________|
 
-; gets nothing
+; gets charNum
 ; returns key code in al
-proc playerInput
+proc playerInput ; 006c
 	push bp
 	mov bp, sp
 	inc bp
 	inc bp
 	push bx
-	push cx
-	push dx
-	push si
-	push di
+	push es
 	
 startPlayerInput:
 	
@@ -53,14 +50,53 @@ startPlayerInput:
 	; JMP startPlayerInput
 	
 	
-	
-	
 	mov ah, 1
 	int 16h
 	JZ playerKey80h
 	mov ah, 0h
 	int 16h
 	
+	
+	; in al, 64h
+	; cmp al, 10b
+	; jne newKeyInBuffer
+	
+	; mov bx, par1
+	; push [keyCode + bx]
+	; call noNewKey
+	; mov ax, 80h
+	; jmp endPlayerInput
+	
+; newKeyInBuffer:
+	; mov ax, 40h
+    ; mov es, ax                  ;access keyboard data area via segment 40h
+    ; mov [word ptr es:1ah], 1eh  ;set the kbd buff head to start of buff
+    ; mov [word ptr es:1ch], 1eh  ;set the kbd buff tail to same as buff head
+                                ; ;the keyboard typehead buffer is now cleared
+	; xor ah, ah
+	; in al, 60h
+	
+	; mov al, 11h
+	
+	; test al, 80h
+	; jz acceptKey
+	
+	; mov bx, par1
+	; mov bx, [lastScanCode + bx]
+	; or bl, 80h
+	; cmp bl, al
+	; je playerKey80h
+	; jmp endPlayerInput
+	
+	
+	
+	
+	
+	
+; acceptKey:
+	
+	; mov bx, par1
+	; mov [lastScanCode + bx], ax
 	
 	cmp ah, 11h ; 11h = W
 	JZ playerKey00001b
@@ -95,23 +131,54 @@ playerKey10000b:
 	
 endPlayerInput:
 	
-	pop di
-	pop si
-	pop dx
-	pop cx
+	pop es
 	pop bx
 	pop bp
 	ret
 endp playerInput
 
 
+; ; gets previous keyCode
+; ; returns new KeyCode in ax
+; proc noNewKey
+	; push bp
+	; mov bp, sp
+	; inc bp
+	; inc bp
+	; push bx
+	
+	; mov bx, par1
+	
+	; cmp bx, 80h
+	; je resetTo80h
+	; cmp bx, 6
+	; je resetTo80h
+	; cmp bx, 5
+	; je resetTo80h
+	
+	
+	; mov ax, bx
+	; jmp endNoNewKey
+	
+; resetTo80h:
+	; mov ax, 80h
+	
+	
+; endNoNewKey:
+	
+	; pop bx
+	; pop bp
+	; ret 2
+; endp noNewKey
+	
+	
 ;----------------------------------------------------------------------------------------------------|
 ;                         Enemy                                                                      |
 ;____________________________________________________________________________________________________|
 
 ; gets facing, (x, y) it's, (x, y) player
 ; returns key code in ax
-proc enemyInput
+proc enemyInput ; 0097
 	push bp
 	mov bp, sp
 	inc bp

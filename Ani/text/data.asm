@@ -35,6 +35,10 @@ objectNumIW3 db " = "
 objectNumIW4 db (?) ; put worth
 objectNumIW5 db 10, 13, 10, 13
 
+livingIW1 db "living"
+livingIW3 db " = "
+livingIW4 db (?) ; put worth
+livingIW5 db 10, 13
 
 keyCodesIW1 db "keyCode"
 keyCodesIW3 db " = "

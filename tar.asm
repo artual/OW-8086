@@ -2,6 +2,9 @@ IDEAL
 MODEL small
 STACK 100h
 
+numberOfObjectsNow equ 4
+
+
 par5 equ [word ptr bp + 10]
 par4 equ [word ptr bp + 8]
 par3 equ [word ptr bp + 6]
@@ -26,12 +29,13 @@ clock equ [es:6ch]
 	include 'Ani\Graph.asm'
 	include 'Ani\charAni.asm'
 	include 'Ani\rectangl.asm'
+	
+	include 'Gat\Gat.asm'
 
 DATASEG
 ; --------------------------
 ; Your variables here
 ; --------------------------
-
 
 
 
@@ -55,14 +59,14 @@ actionCode  dw 5 dup (0)
 	
 facing dw 5 dup (0)
 	
-xCords dw (150)
-	   dw (310)
+xCords dw (130)
+	   dw (170)
 	   dw (310)
 	   dw (0)
 	   dw (0)
 xCordsPast dw 5 dup (0)
-yCords dw (100)
-	   dw (190)
+yCords dw (150)
+	   dw (130)
 	   dw (0)
 	   dw (190)
 	   dw (0)
@@ -79,20 +83,26 @@ enemyChances dw 5 dup (0)
 
 aniStatus dw 5 dup (0)
 aniClock dw 5 dup (0)
+
 aniCounter dw 5 dup (0)
 
 living dw 5 dup (1)
+
 
 CODESEG
 
 start:
 	mov ax, @data
 	mov ds, ax
-	
 ; --------------------------
 ; Your code here
 ; --------------------------
+	
 
+push ax
+mov ax, offset xCords
+mov ax, offset yCords
+pop ax
 
 
 
@@ -130,7 +140,10 @@ mainLoop:
 	
 	call mainInput
 	
-	
+	; mov dx, [keyCode + 2]
+	; add dl, 30h
+	; mov ah, 2
+	; int 21h
 	
 	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -150,6 +163,23 @@ mainLoop:
 	
 	
 	call mainAnimation
+	
+	
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;; Gathering ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	
+	
+	call mainGathering
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

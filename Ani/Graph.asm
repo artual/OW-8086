@@ -1,7 +1,7 @@
 IDEAL
 CODESEG
 
-proc mainAnimation ; 0255
+proc mainAnimation ; 0375
 	push bp
 	mov bp, sp
 	inc bp
@@ -22,9 +22,9 @@ mainAnimationLoop:
 	JZ endMainAnimationLoop
 	
 	
-	; if the key isn't between 1, 4 (Mvm), jmp
+	; if the key isn't between 1, 8 (Mvm), jmp
 actionCodeNOT80h:
-	cmp ax, 4
+	cmp ax, 8
 	JG actionCodeBIG4
 	
 	push [actionCode + bx]
@@ -36,8 +36,8 @@ actionCodeNOT80h:
 	jmp endMainAnimationLoop
 	
 actionCodeBIG4:
-	cmp ax, 5
-	JG actionCodeBIG5
+	cmp ax, 9
+	JG actionCodeBIG9
 	
 	; JMP endMainAnimationLoop ; REMOVE THIS ONCE THE FIGHTING ANIMATION IS DONE
 	
@@ -48,17 +48,18 @@ actionCodeBIG4:
 	
 	jmp endMainAnimationLoop
 	
-actionCodeBIG5:
-	cmp ax, 6
-	JG actionCodeBIG6
+actionCodeBIG9:
+	cmp ax, 10
+	JG actionCodeBIG10
 	
+	push bx
 	call gettingHitAni
 	
 	jmp endMainAnimationLoop
 	
-actionCodeBIG6:
-	cmp ax, 7
-	JG actionCodeBIG7
+actionCodeBIG10:
+	cmp ax, 11
+	JG actionCodeBIG11
 	
 	mov dl, 'a'
 	mov ah, 2
@@ -70,13 +71,13 @@ actionCodeBIG6:
 	
 	
 	
-actionCodeBIG7:
+actionCodeBIG11:
 	
 endMainAnimationLoop:
 	
 	inc bx
 	inc bx
-	cmp bx, 4
+	cmp bx, numberOfObjectsNow
 	JNZ mainAnimationLoop
 	
 	
